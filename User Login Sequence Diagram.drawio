@@ -1,0 +1,88 @@
+<mxfile host="app.diagrams.net" modified="2023-09-05T19:52:05.525Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36" etag="Vtdh3q4cAe8LYz6opVb0" version="21.7.2" type="github">
+  <diagram name="Page-1" id="2YBvvXClWsGukQMizWep">
+    <mxGraphModel dx="3733" dy="2667" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="aM9ryv3xv72pqoxQDRHE-1" value="User" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=0;dropTarget=0;collapsible=0;recursiveResize=0;outlineConnect=0;portConstraint=eastwest;newEdgeStyle={&quot;edgeStyle&quot;:&quot;elbowEdgeStyle&quot;,&quot;elbow&quot;:&quot;vertical&quot;,&quot;curved&quot;:0,&quot;rounded&quot;:0};" parent="1" vertex="1">
+          <mxGeometry x="400" y="-770" width="130" height="300" as="geometry" />
+        </mxCell>
+        <mxCell id="aM9ryv3xv72pqoxQDRHE-5" value="LoginComponent" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=0;dropTarget=0;collapsible=0;recursiveResize=0;outlineConnect=0;portConstraint=eastwest;newEdgeStyle={&quot;edgeStyle&quot;:&quot;elbowEdgeStyle&quot;,&quot;elbow&quot;:&quot;vertical&quot;,&quot;curved&quot;:0,&quot;rounded&quot;:0};" parent="1" vertex="1">
+          <mxGeometry x="590" y="-770" width="210" height="300" as="geometry" />
+        </mxCell>
+        <mxCell id="aM9ryv3xv72pqoxQDRHE-7" value="1) Access LoginPage" style="html=1;verticalAlign=bottom;endArrow=block;edgeStyle=elbowEdgeStyle;elbow=horizontal;curved=0;rounded=0;" parent="1" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="455" y="-690.0000000000002" as="sourcePoint" />
+            <Array as="points">
+              <mxPoint x="610" y="-690" />
+            </Array>
+            <mxPoint x="695" y="-690" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="G8hx02r4Ywcos7J3SRi9-1" value="firebaseUI" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=0;dropTarget=0;collapsible=0;recursiveResize=0;outlineConnect=0;portConstraint=eastwest;newEdgeStyle={&quot;edgeStyle&quot;:&quot;elbowEdgeStyle&quot;,&quot;elbow&quot;:&quot;vertical&quot;,&quot;curved&quot;:0,&quot;rounded&quot;:0};" vertex="1" parent="1">
+          <mxGeometry x="835" y="-770" width="210" height="300" as="geometry" />
+        </mxCell>
+        <mxCell id="G8hx02r4Ywcos7J3SRi9-2" value="redux Store" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=0;dropTarget=0;collapsible=0;recursiveResize=0;outlineConnect=0;portConstraint=eastwest;newEdgeStyle={&quot;edgeStyle&quot;:&quot;elbowEdgeStyle&quot;,&quot;elbow&quot;:&quot;vertical&quot;,&quot;curved&quot;:0,&quot;rounded&quot;:0};" vertex="1" parent="1">
+          <mxGeometry x="1085" y="-770" width="210" height="300" as="geometry" />
+        </mxCell>
+        <mxCell id="G8hx02r4Ywcos7J3SRi9-4" value="2) Initialize firebaseUI" style="html=1;verticalAlign=bottom;endArrow=block;edgeStyle=elbowEdgeStyle;elbow=horizontal;curved=0;rounded=0;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="695" y="-660.0000000000002" as="sourcePoint" />
+            <Array as="points">
+              <mxPoint x="850" y="-660" />
+            </Array>
+            <mxPoint x="935" y="-660" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="G8hx02r4Ywcos7J3SRi9-8" value="3) set configs for firebaseUI" style="html=1;verticalAlign=bottom;endArrow=block;edgeStyle=elbowEdgeStyle;elbow=horizontal;curved=0;rounded=0;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="695" y="-620.3800000000002" as="sourcePoint" />
+            <Array as="points">
+              <mxPoint x="850" y="-620.38" />
+            </Array>
+            <mxPoint x="935" y="-620.38" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="G8hx02r4Ywcos7J3SRi9-9" value="4) User interacts with login widget&amp;nbsp;" style="html=1;verticalAlign=bottom;endArrow=block;edgeStyle=elbowEdgeStyle;elbow=horizontal;curved=0;rounded=0;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="455" y="-590.0000000000002" as="sourcePoint" />
+            <Array as="points">
+              <mxPoint x="610" y="-590" />
+            </Array>
+            <mxPoint x="695" y="-590" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="G8hx02r4Ywcos7J3SRi9-10" value="5) firebaseUI Auth callback functions execute&amp;nbsp;" style="html=1;verticalAlign=bottom;endArrow=block;edgeStyle=elbowEdgeStyle;elbow=horizontal;curved=0;rounded=0;" edge="1" parent="1">
+          <mxGeometry x="0.1667" relative="1" as="geometry">
+            <mxPoint x="945" y="-550.0000000000002" as="sourcePoint" />
+            <Array as="points">
+              <mxPoint x="1100" y="-550" />
+            </Array>
+            <mxPoint x="1185" y="-550" as="targetPoint" />
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="G8hx02r4Ywcos7J3SRi9-11" value="6) Dispatch is called to update store" style="html=1;verticalAlign=bottom;endArrow=block;edgeStyle=elbowEdgeStyle;elbow=horizontal;curved=0;rounded=0;" edge="1" parent="1">
+          <mxGeometry x="0.1667" relative="1" as="geometry">
+            <mxPoint x="695" y="-520.0000000000002" as="sourcePoint" />
+            <Array as="points">
+              <mxPoint x="850" y="-520" />
+            </Array>
+            <mxPoint x="935" y="-520" as="targetPoint" />
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="G8hx02r4Ywcos7J3SRi9-12" value="7) Redux Store&#39;s state is updated for the authSlice reducer" style="html=1;verticalAlign=bottom;endArrow=block;edgeStyle=elbowEdgeStyle;elbow=vertical;curved=0;rounded=0;" edge="1" parent="1">
+          <mxGeometry x="0.3333" y="-1" relative="1" as="geometry">
+            <mxPoint x="945" y="-501.0000000000002" as="sourcePoint" />
+            <Array as="points">
+              <mxPoint x="1100" y="-501" />
+            </Array>
+            <mxPoint x="1185" y="-501" as="targetPoint" />
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
