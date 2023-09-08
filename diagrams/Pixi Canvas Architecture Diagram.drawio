@@ -1,0 +1,84 @@
+<mxfile host="app.diagrams.net" modified="2023-09-08T23:40:37.038Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36" etag="Ul2kEPgMCs-wsUxEZqB9" version="21.7.2" type="github">
+  <diagram id="prtHgNgQTEPvFCAcTncT" name="Page-1">
+    <mxGraphModel dx="1106" dy="470" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="jtTbSfBmvdiQBClg7AU0-2" value="React App" style="swimlane;" vertex="1" parent="1">
+          <mxGeometry x="58" y="98" width="720" height="739" as="geometry" />
+        </mxCell>
+        <mxCell id="jtTbSfBmvdiQBClg7AU0-6" value="Redux Store" style="swimlane;" vertex="1" parent="jtTbSfBmvdiQBClg7AU0-2">
+          <mxGeometry x="20" y="40" width="240" height="200" as="geometry" />
+        </mxCell>
+        <mxCell id="jtTbSfBmvdiQBClg7AU0-49" value=" contains slices, thunks, apis, reducers, *much of this to be made, and an index.js&amp;nbsp;&lt;br&gt;&lt;br&gt;Index.js contains the reducers which hold the gamestate data from slices" style="label;whiteSpace=wrap;html=1;image=img/clipart/Gear_128x128.png" vertex="1" parent="jtTbSfBmvdiQBClg7AU0-6">
+          <mxGeometry x="5" y="22" width="215" height="128" as="geometry" />
+        </mxCell>
+        <mxCell id="jtTbSfBmvdiQBClg7AU0-4" value="Pixi Canvas Component" style="swimlane;" vertex="1" parent="jtTbSfBmvdiQBClg7AU0-2">
+          <mxGeometry x="346" y="41" width="350" height="310" as="geometry" />
+        </mxCell>
+        <UserObject label="imports &amp;amp; uses addObject, removeObject" placeholders="1" name="Variable" id="jtTbSfBmvdiQBClg7AU0-17">
+          <mxCell style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;overflow=hidden;" vertex="1" parent="jtTbSfBmvdiQBClg7AU0-4">
+            <mxGeometry y="240" width="110" height="70" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="uses" placeholders="1" name="Variable" id="jtTbSfBmvdiQBClg7AU0-20">
+          <mxCell style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;overflow=hidden;" vertex="1" parent="jtTbSfBmvdiQBClg7AU0-4">
+            <mxGeometry x="96" y="281" width="64" height="29" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="dispatches actions to, reads state from" placeholders="1" name="Variable" id="jtTbSfBmvdiQBClg7AU0-25">
+          <mxCell style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;overflow=hidden;" vertex="1" parent="jtTbSfBmvdiQBClg7AU0-4">
+            <mxGeometry y="51" width="130" height="70" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <mxCell id="jtTbSfBmvdiQBClg7AU0-45" value="&amp;nbsp;contains PIXI.Application and PIXI.Container, renders canvas" style="label;whiteSpace=wrap;html=1;image=img/clipart/Gear_128x128.png" vertex="1" parent="jtTbSfBmvdiQBClg7AU0-4">
+          <mxGeometry x="86" y="121" width="214" height="89" as="geometry" />
+        </mxCell>
+        <mxCell id="jtTbSfBmvdiQBClg7AU0-3" value="usePixiGrid hook" style="swimlane;startSize=23;" vertex="1" parent="jtTbSfBmvdiQBClg7AU0-2">
+          <mxGeometry x="432" y="432" width="224" height="238" as="geometry" />
+        </mxCell>
+        <UserObject label="receives parameter" placeholders="1" name="Variable" id="jtTbSfBmvdiQBClg7AU0-34">
+          <mxCell style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;overflow=hidden;" vertex="1" parent="jtTbSfBmvdiQBClg7AU0-3">
+            <mxGeometry x="69.5" y="35" width="85" height="40" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <mxCell id="jtTbSfBmvdiQBClg7AU0-46" value=" draws the grid using PIXI.Graphics" style="label;whiteSpace=wrap;html=1;image=img/clipart/Gear_128x128.png" vertex="1" parent="jtTbSfBmvdiQBClg7AU0-3">
+          <mxGeometry x="22" y="100" width="180" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="jtTbSfBmvdiQBClg7AU0-27" value="gameStateSlice" style="swimlane;startSize=23;" vertex="1" parent="jtTbSfBmvdiQBClg7AU0-2">
+          <mxGeometry x="20" y="442" width="180" height="193" as="geometry" />
+        </mxCell>
+        <UserObject label="modifies" placeholders="1" name="Variable" id="jtTbSfBmvdiQBClg7AU0-28">
+          <mxCell style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;overflow=hidden;" vertex="1" parent="jtTbSfBmvdiQBClg7AU0-27">
+            <mxGeometry y="30" width="80" height="20" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <mxCell id="jtTbSfBmvdiQBClg7AU0-47" value="contains addObject and removeObject actions" style="label;whiteSpace=wrap;html=1;image=img/clipart/Gear_128x128.png" vertex="1" parent="jtTbSfBmvdiQBClg7AU0-27">
+          <mxGeometry x="5" y="61" width="170" height="71" as="geometry" />
+        </mxCell>
+        <mxCell id="jtTbSfBmvdiQBClg7AU0-35" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.75;exitY=0;exitDx=0;exitDy=0;entryX=0.75;entryY=1;entryDx=0;entryDy=0;" edge="1" parent="jtTbSfBmvdiQBClg7AU0-2" source="jtTbSfBmvdiQBClg7AU0-34" target="jtTbSfBmvdiQBClg7AU0-4">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="jtTbSfBmvdiQBClg7AU0-36" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.375;entryY=0;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="jtTbSfBmvdiQBClg7AU0-2" source="jtTbSfBmvdiQBClg7AU0-20" target="jtTbSfBmvdiQBClg7AU0-3">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="474" y="422" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="jtTbSfBmvdiQBClg7AU0-38" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0;exitY=1;exitDx=0;exitDy=0;entryX=1;entryY=0.25;entryDx=0;entryDy=0;" edge="1" parent="jtTbSfBmvdiQBClg7AU0-2" source="jtTbSfBmvdiQBClg7AU0-17" target="jtTbSfBmvdiQBClg7AU0-27">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="372" y="351" />
+              <mxPoint x="372" y="490" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="jtTbSfBmvdiQBClg7AU0-39" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0;exitY=0.25;exitDx=0;exitDy=0;entryX=0.995;entryY=0.095;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="jtTbSfBmvdiQBClg7AU0-2" source="jtTbSfBmvdiQBClg7AU0-25" target="jtTbSfBmvdiQBClg7AU0-6">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="jtTbSfBmvdiQBClg7AU0-50" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0.25;entryY=1;entryDx=0;entryDy=0;" edge="1" parent="jtTbSfBmvdiQBClg7AU0-2" source="jtTbSfBmvdiQBClg7AU0-28" target="jtTbSfBmvdiQBClg7AU0-6">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
