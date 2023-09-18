@@ -1,9 +1,12 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-
+import { authReducer } from './authSlice';
 export const fetchGarden = createAsyncThunk('gardenState/fetchGarden',
     async (userId) => {
-        // Taking in userId, fetch garden state from server
-        //steps here-- verify userID, valid token, fetch data
+        // Taking in userId , fetch garden state from server
+        //steps here-- verify userID and valid token, fetch data
+        //
+
+
     });
 
 const gardenStateSlice = createSlice({
