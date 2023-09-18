@@ -1,7 +1,7 @@
 import logo from './logo.svg';
 import './App.css';
 import LoginComponent from './components/LoginComponent';
-
+import PixiCanvasComponent from './components/PixiCanvasComponent';
 
 function App() {
 
@@ -13,8 +13,9 @@ function App() {
     <div className="App">
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
-        <LoginComponent/>
-      </header>
+         </header> 
+      <LoginComponent/>
+      <PixiCanvasComponent/>
     </div>
   );
 }
