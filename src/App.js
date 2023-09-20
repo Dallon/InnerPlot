@@ -1,6 +1,6 @@
 import logo from './logo.svg';
 import './App.css';
-import LoginComponent from './components/LoginComponent';
+import LoginComponent from './components/ui/LoginComponent';
 import PixiCanvasComponent from './components/PixiCanvasComponent';
 
 function App() {
