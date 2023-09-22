@@ -9,7 +9,7 @@ export const fetchUserData = createAsyncThunk(
         //userRef equals the document associated with their userID in firestore
         const userRef = db.collection('users').doc(userId);
 
-        //doc declared equal to results of that async operation
+        //doc declared equal to results of the async operation above
         const doc = await userRef.get();
         
   
