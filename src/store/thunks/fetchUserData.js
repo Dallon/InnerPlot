@@ -11,16 +11,27 @@ export const fetchUserData = createAsyncThunk(
 
         //doc declared equal to results of that async operation
         const doc = await userRef.get();
+        
   
         if (!doc.exists) {
           console.error('No user found!');
           return rejectWithValue('No user found');
         }
+        
+        const userData = doc.data();
+        // Check if userData and createdAt exist, then convert createdAt to a JavaScript Date object
+        if (userData && userData.createdAt) {
+
+          //converted to serializable format from firebase datestamp format
+          //so that it works with Redux
+          userData.createdAt = userData.createdAt.toDate().toISOString();
+        }
   
-        console.log("Fetched User Data:", doc.data());
-        return doc.data(); // The data will be handled by the fulfilled case in userSlice
+        console.log("Fetched User Data:", userData);
+        return userData; // The data will be handled by the fulfilled case in userSlice
 
       }
+       
 
       catch (error) {
         console.error('Failed to fetch user data:', error);
