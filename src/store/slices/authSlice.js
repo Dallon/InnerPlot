@@ -8,10 +8,8 @@ export const authenticateUser = createAsyncThunk(
     try{
       const user = firebase.auth().currentUser;
     if (user) {
-      //retrieve token
-      const token = await user.getIdToken();
-      //return user and token
-      return { user: user.uid, token};
+   
+      return { user: user.uid};
     } else{
       return rejectWithValue('No user is signed in.');
     }
@@ -51,7 +49,7 @@ const authSlice = createSlice({
     builder
     .addCase(authenticateUser.fulfilled, (state, action) => {
       state.isAuthenticated = true;
-      state.userId = action.payload.user;
+      state.userId = action.payload;
       state.loading = false;
     })
     .addCase(authenticateUser.rejected, (state, action) => {
