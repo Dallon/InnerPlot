@@ -24,7 +24,6 @@ export const authenticateUser = createAsyncThunk(
 const initialState = {
   isAuthenticated: false,
   userId: null,
-  token: null,
   loading: false,
   error: null,
 };
@@ -35,7 +34,7 @@ const authSlice = createSlice({
   reducers: {
     //synchronous reducers
     //In the setUserId reducer, the assumption is that the
-    //  action.payload directly contains the value forthe user ID
+    //  action.payload directly contains the value for the user ID
 
           setAuthenticated: (state, action) => {
             state.isAuthenticated = action.payload;
@@ -43,6 +42,7 @@ const authSlice = createSlice({
           },
           setUserId: (state, action) => {
             state.userId = action.payload;
+            console.log("User ID: " + action.payload)
             
           },
         },
@@ -52,7 +52,6 @@ const authSlice = createSlice({
     .addCase(authenticateUser.fulfilled, (state, action) => {
       state.isAuthenticated = true;
       state.userId = action.payload.user;
-      state.token = action.payload.token;
       state.loading = false;
     })
     .addCase(authenticateUser.rejected, (state, action) => {
