@@ -36,7 +36,7 @@ function LoginComponent() {
             await userRef.set({
               profile: {
                 username: '',
-                email: user.email, 
+                email: userRef.email, 
                 avatar: '', 
               },
               gameStats: {
