@@ -1,5 +1,5 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import fetchUserData from './thunks/fetchUserData';
+import { createSlice } from '@reduxjs/toolkit';
+import fetchUserData from '../thunks/fetchUserData';
 
 // User slice is used to manage additional user-specific data that is fetched 
 // from Firestore after the user has been authenticated
