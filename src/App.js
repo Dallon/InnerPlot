@@ -2,6 +2,7 @@ import logo from './logo.svg';
 import './App.css';
 import LoginComponent from './components/ui/LoginComponent';
 import PixiCanvasComponent from './components/PixiCanvasComponent';
+import UserProfileComponent from './components/ui/UserProfileComponent';
 
 function App() {
 
@@ -16,6 +17,7 @@ function App() {
          </header> 
       <LoginComponent/>
       <PixiCanvasComponent/>
+      <UserProfileComponent/>
     </div>
   );
 }
