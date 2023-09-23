@@ -1,9 +1,12 @@
 import React, { useEffect } from 'react';
 import * as firebaseui from 'firebaseui';
 import firebase from '@firebase/app-compat';
-import  firebaseInstance  from '../../firebase';
+import firebaseInstance from '../../firebase';
 import { useDispatch } from 'react-redux';
 import { setAuthenticated, setUserId } from '../../store/slices/authSlice';
+//reminder that we import the thunk used in the slice,
+// not the addCase from the slice
+import { fetchUserData } from '../../store/thunks/fetchUserData';
 import { db } from '../../firebase';
 
 function LoginComponent() {
@@ -26,18 +29,22 @@ function LoginComponent() {
         signInSuccessWithAuthResult: async (authResult) => {
           dispatch(setAuthenticated(true));
           dispatch(setUserId(authResult.user.uid));
-          
+          dispatch(fetchUserData(authResult.user.uid));
+
           //get a reference to the user's document, declare a variable to be that document.
           const userRef = db.collection('users').doc(authResult.user.uid);
           const doc = await userRef.get();
-        
+
+          // const timestamp = doc.data().createdAt;
+          // const date = timestamp.toDate(); // Converts to JavaScript Date object
+
           if (!doc.exists) {
             // This means the user is new. Let's create a document for them.
             await userRef.set({
               profile: {
                 username: '',
-                email: userRef.email, 
-                avatar: '', 
+                email: '',
+                avatar: '',
               },
               gameStats: {
                 levelsCompleted: 0,
@@ -54,7 +61,7 @@ function LoginComponent() {
                 items: {},
                 currency: 0,
               },
-            
+
               createdAt: firebase.firestore.FieldValue.serverTimestamp(),
             });
             console.log('Creating new document for user:', authResult.user.uid);
