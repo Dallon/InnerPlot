@@ -21,3 +21,5 @@ const useAuthListener = () => {
         return () => detachAuthListener();
     })
 }
+
+export default useAuthListener;
