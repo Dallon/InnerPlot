@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { fetchUserData } from '../thunks/fetchUserData';
+import { fetchUserData } from '../thunks/fetchUserDataThunk';
 import { db } from '../../firebase';
 
 // User slice is used to manage additional user-specific data that is fetched 
@@ -8,18 +8,18 @@ import { db } from '../../firebase';
 export const updateUserProfile = createAsyncThunk(
   'user/updateUserProfile',
   async ({ userId, profileData }) => {
-    // No need to get userId from getState since it's passed as a parameter
-
+    // No need to get userId from getState since it's passed as a parameter.
     // Create a reference to the user document in Firestore
     const userRef = db.collection('users').doc(userId);
 
     // Update the username field in the user's profile
     await userRef.update({
-      'profile.username': profileData.name
+      'profile.username': profileData.name,
+      'profile.avatar': profileData.avatar
     });
 
     // Return the updated profile data
-    return { username: profileData.name };
+    return { username: profileData.name, avatar: profileData.avatar };
   }
 );
 
