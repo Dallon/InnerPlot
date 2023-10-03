@@ -1,105 +1,82 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import * as PIXI from 'pixi.js';
-import { addObject, removeObject } from '../store/slices/gameStateSlice';
 import { useViewport } from '../hooks/useViewport';
 import { usePixiApp } from '../hooks/usePixiApp';
-import { updateCellDimensions } from '../store/slices/boxSlice';
-
+import { useLoadSVG } from '../hooks/useLoadSVG';
+import { addPixiObject } from '../utils/pixiUtils';
+import { useRenderIsometricTiles } from '../hooks/useRenderIsometricTiles';
+import { useContainerConnections } from '../hooks/useContainerConnections';
 
 const PixiCanvasComponent = () => {
-
-    //send or dispatch an action to the redux store 
-    //by giving the action as an argument to the dispatch variable
+    // Dispatch an action to the Redux store
     const dispatch = useDispatch();
 
-    // extract data from the Redux store state for 
-    // use in this component, runs whenever the component renders
-    //unless reference hasnt changed since previous render
+    //Extract gameState from the Redux store, runs whenever the component renders
+    //unless gameState hasnt changed since previous render
     const gameState = useSelector((state) => state.gameState);
 
-    //global variable of the stage so it can be used in multiple useEffects
-    const stageRef = useRef(null);
-
-    //create an app reference, already appended to virtual document object model
+    //create an app reference
     const appRef = usePixiApp();
 
-    // Initialize the stage container first
-    useEffect(() => {
-        if (!stageRef.current) {
-            stageRef.current = new PIXI.Container();
-        }
-    }, []); // Empty dependency array to ensure this runs only once
+    // Initialize stageRef with a new PIXI Container so it can be used in useEffects
+    const stageRef = useRef(new PIXI.Container());
 
-    //get the viewportRef from useViewport
+    //create a reference for the mainContainer
+    const mainContainerRef = useRef(new PIXI.Container());
+
+    //get the viewport Ref
     const viewportRef = useViewport(appRef, stageRef);
 
-    // Main setup (remains unchanged, only comments added)
-    useEffect(() => {
-        // Check for all null references before proceeding
+    //get the gridContainerRef
+    const gridContainerRef = useRef(new PIXI.Container());
 
+    const [texture, setTexture] = useState(null);
 
-        if (!viewportRef.current) {
-            console.error("viewportRef.current is not initialized");
-            return;
-        }
+    // Define the tile width and height according to your requirements
+    const tileWidth = 64; // or your specific value
+    const tileHeight = 64; // or your specific value
 
-        if (!stageRef.current) {
-            console.error("stageRef.current is not initialized");
-            return;
-        }
-
-        if (!appRef.current.stage) {
-            console.error("appRef.current.stage is not initialized");
-            return;
-        }
-
-        // If all checks pass, then add viewportRef to the app's stage
-        appRef.current.stage.addChild(viewportRef.current);
-
-
-        //initialize PixiJS objects for each object in gameState.objects.byId
-        Object.values(gameState.objects.byId).forEach(addPixiObject);
-
-        // Create the background sprite with a basic white texture
-        let bg = new PIXI.Sprite(PIXI.Texture.WHITE);
-        // Set it to fill the screen
-        bg.width = appRef.current.screen.width;
-        bg.height = appRef.current.screen.height;
-
-        // Add a click handler
-        bg.interactive = true;
-        stageRef.current.addChild(bg);
-
-        // Add a new object when clicking on the stage
-        bg.on('pointerdown', (event) => {
-            const global = event.data.global;
-            const local = viewportRef.current.toLocal(global);
-            const newObject = {
-                x: local.x,
-                y: local.y,
-                type: 'tree',
-                id: String(new Date().getTime()),
-            };
-
-            addPixiObject(newObject); // Add to PIXI stage
-            dispatch(addObject(newObject)); // Update Redux state
-        });
+    // Define the callback function here, right after your state and ref setup
+    const handleTextureLoaded = useCallback((loadedTexture) => {
+        setTexture(loadedTexture); // Or do something else
     }, []);
 
-    // Function to add a new PIXI object
-    const addPixiObject = (object) => {
-        const graphics = new PIXI.Graphics();
-        graphics.beginFill(object.type === 'tree' ? 0x00FF00 : 0xFF0000);
-        graphics.drawCircle(object.x, object.y, 10);
-        graphics.endFill();
-        stageRef.current.addChild(graphics);
-    };
+    //declaring the svgURL and the useLoadSVG hook outside the useEffect below
+    const svgURL = process.env.PUBLIC_URL + '/squareIsoTest4.svg';
 
-    // Watch for gameState.objects.byId changes and initialize PixiJS objects
+    const loadedTexture = useLoadSVG(svgURL, gridContainerRef, handleTextureLoaded);
+    console.log("Loaded Texture" + loadedTexture);
+
     useEffect(() => {
-        Object.values(gameState.objects.byId).forEach(addPixiObject);
+        if (loadedTexture) {
+            setTexture(loadedTexture);
+        }
+    }, [loadedTexture]);
+
+    //create a reference for the objectsContainer
+    const objectsContainerRef = useRef(new PIXI.Container());
+
+    //connect the app -> stage -> viewport -> main container -> grid container
+    useContainerConnections(viewportRef, stageRef, appRef, mainContainerRef, gridContainerRef);
+
+    console.log("the current gridContainerRef value is " + gridContainerRef.current);
+    console.log("the appRef width is currently " + appRef.current?.screen.width);
+
+    // This is the useEffect to render the isometric tiles using the loaded texture
+    useRenderIsometricTiles(mainContainerRef, texture, tileWidth, tileHeight);
+
+    // addPixiObjectToStage handles the access to objectsContainerRef.current, ensuring it is defined correctly when addPixiObject is called
+    const addPixiObjectToStage = useCallback((object) => {
+        addPixiObject(object, objectsContainerRef.current);
+    }, [objectsContainerRef]);
+
+    // Watch for gameState.objects.byId changes and initialize PixiJS objects if change occurs
+    useEffect(() => {
+        //each array object is passed to addPixiObjectToStage which calls addPixiObject with stageRef.current and the object
+        Object.values(gameState.objects.byId).forEach(addPixiObjectToStage);
     }, [gameState.objects.byId]);
+
 
     return (<div id="pixi-container"></div>);
 }
