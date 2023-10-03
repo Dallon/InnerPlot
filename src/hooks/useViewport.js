@@ -1,8 +1,10 @@
-import { useEffect, useRef } from "react";
-import { Viewport } from "pixi-viewport";
+import { useEffect, useRef } from 'react';
+import { Viewport } from 'pixi-viewport';
+
 
 
 export const useViewport = (appRef, stageRef) => {
+    console.log("debug");
     const viewportRef = useRef(null);
 
     useEffect(() => {
@@ -16,14 +18,12 @@ export const useViewport = (appRef, stageRef) => {
             worldWidth: 1000,
             worldHeight: 1000,
             events: appRef.current.renderer.events,
-            minScale: 0.5,
-            maxScale: 2,
         });
 
 
-        // Add stage to viewportRef and viewportRef to the app stage
+        // Add stage to viewportRef
         viewportRef.current.addChild(stageRef.current);
-    
+
         // Activate viewportRef plugins
         viewportRef.current.drag().pinch().wheel().decelerate();
         viewportRef.current.clampZoom({
