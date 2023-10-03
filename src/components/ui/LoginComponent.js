@@ -6,7 +6,7 @@ import { useDispatch } from 'react-redux';
 import { setAuthenticated, setUserId } from '../../store/slices/authSlice';
 //reminder that we import the thunk used in the slice,
 // not the addCase from the slice
-import { fetchUserData } from '../../store/thunks/fetchUserData';
+import { fetchUserData } from '../../store/thunks/fetchUserDataThunk';
 import { db } from '../../firebase';
 
 function LoginComponent() {
@@ -44,7 +44,7 @@ function LoginComponent() {
               profile: {
                 username: '',
                 email: '',
-                avatar: '',
+                avatar: <img></img>,
               },
               gameStats: {
                 levelsCompleted: 0,
