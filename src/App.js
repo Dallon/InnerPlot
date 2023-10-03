@@ -1,19 +1,15 @@
-import logo from './logo.svg';
 import './App.css';
 import LoginComponent from './components/ui/LoginComponent';
 import PixiCanvasComponent from './components/PixiCanvasComponent';
 import UserProfileComponent from './components/ui/UserProfileComponent';
+import useAuthListener from './hooks/useAuthListener';
 
 function App() {
-
-  
-
-
+  useAuthListener();
 
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
          </header> 
       <LoginComponent/>
       <PixiCanvasComponent/>
