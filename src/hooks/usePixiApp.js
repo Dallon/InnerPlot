@@ -12,7 +12,6 @@ export const usePixiApp = () =>{
             width: 1280,
             height: 720,
             backgroundColor: 0xAAAAAA,
-            
         });
         // append app reference to DOM here to ensure it has one reference.
         console.log('App Dimensions:', appRef.current.screen.width, appRef.current.screen.height);

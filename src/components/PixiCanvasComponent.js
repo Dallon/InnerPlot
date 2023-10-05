@@ -4,9 +4,13 @@ import * as PIXI from 'pixi.js';
 import { useViewport } from '../hooks/useViewport';
 import { usePixiApp } from '../hooks/usePixiApp';
 import { useLoadSVG } from '../hooks/useLoadSVG';
-import { addPixiObject } from '../utils/pixiUtils';
-import { useRenderIsometricTiles } from '../hooks/useRenderIsometricTiles';
+import { addPixiObject} from '../utils/pixiUtils';
+import { useCreateIsoGrid } from '../hooks/useCreateIsoGrid';
+import { useLoadItems } from '../hooks/useLoadItems';
 import { useContainerConnections } from '../hooks/useContainerConnections';
+import { useCenterContainers } from '../hooks/useCenterContainers';
+import { InventoryUI } from './ui/InventoryUI';
+import { useCreateInventoryIcon } from '../hooks/useCreateInventoryIcon';
 
 const PixiCanvasComponent = () => {
     // Dispatch an action to the Redux store
@@ -46,8 +50,7 @@ const PixiCanvasComponent = () => {
     const svgURL = process.env.PUBLIC_URL + '/squareIsoTest4.svg';
 
     const loadedTexture = useLoadSVG(svgURL, gridContainerRef, handleTextureLoaded);
-    console.log("Loaded Texture" + loadedTexture);
-
+    
     useEffect(() => {
         if (loadedTexture) {
             setTexture(loadedTexture);
@@ -59,13 +62,15 @@ const PixiCanvasComponent = () => {
 
     //connect the app -> stage -> viewport -> main container -> grid container
     useContainerConnections(viewportRef, stageRef, appRef, mainContainerRef, gridContainerRef);
-
-    console.log("the current gridContainerRef value is " + gridContainerRef.current);
-    console.log("the appRef width is currently " + appRef.current?.screen.width);
+    useCreateInventoryIcon(appRef);
+    useCenterContainers(mainContainerRef, gridContainerRef);
 
     // This is the useEffect to render the isometric tiles using the loaded texture
-    useRenderIsometricTiles(mainContainerRef, texture, tileWidth, tileHeight);
+    useCreateIsoGrid(gridContainerRef, texture, tileWidth, tileHeight);
 
+    // Use the hook to load and display items on the grid container
+    useLoadItems(gridContainerRef);
+  
     // addPixiObjectToStage handles the access to objectsContainerRef.current, ensuring it is defined correctly when addPixiObject is called
     const addPixiObjectToStage = useCallback((object) => {
         addPixiObject(object, objectsContainerRef.current);
@@ -77,8 +82,8 @@ const PixiCanvasComponent = () => {
         Object.values(gameState.objects.byId).forEach(addPixiObjectToStage);
     }, [gameState.objects.byId]);
 
-
-    return (<div id="pixi-container"></div>);
+    return (<div id="pixi-container">
+    </div>);
 }
 
 export default PixiCanvasComponent;

@@ -32,14 +32,14 @@ export class IsoGrid {
 
 
     // Create an isometric tile sprite
-    createIsometricTile(texture, x, y, tileWidth, tileHeight) {
+     createIsometricTile(texture, x, y, tileWidth, tileHeight) {
         const tileSprite = new PIXI.Sprite(texture);
-        tileSprite.anchor.set(0.5, 1);  // Anchor at bottom center-- does nothing.
+        // tileSprite.anchor.set(0.5, 1);  // Anchor at bottom center-- does nothing.
         tileSprite.pivot.set(tileSprite.width / 2, tileSprite.height / 2);
 
         tileSprite.width = tileWidth;
         tileSprite.height = tileHeight;
-        console.log(`Sprite dimensions: ${tileSprite.width}x${tileSprite.height}`);
+        // console.log(`Sprite dimensions: ${tileSprite.width}x${tileSprite.height}`);
 
         tileSprite.rotation = Math.PI / 4;
 
@@ -68,6 +68,8 @@ export class IsoGrid {
         const isoRow = (cartX + cartY) / 2;
         return { row: isoRow, col: isoCol };
     }
+
+
 
     // Method to render the isometric tiles on a PIXI container
     renderTiles(container, texture, tileWidth, tileHeight) {

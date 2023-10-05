@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { db } from '../../firebase';
 //An asynchronous action using createAsyncThunk
 // which responsible for fetching data with
 // 'gardenState/fetchData' as a unique action type string
@@ -12,7 +13,7 @@ export const fetchData = createAsyncThunk(
       // You can get the values of other slices like 'auth' in this case
       const { auth } = getState();
       
-      // Check if the user and JWT token are available in the auth slice of the Redux store
+      // Check if the user is authenticated in the authslice Reducer in the Redux store
       // If not, the action is rejected
       if (!auth.user || !auth.token) {
         return rejectWithValue('User is not authenticated');

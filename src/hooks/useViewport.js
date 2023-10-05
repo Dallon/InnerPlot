@@ -9,14 +9,14 @@ export const useViewport = (appRef, stageRef) => {
 
     useEffect(() => {
         if (!appRef.current || !stageRef.current) return;
-        const screenWidth = appRef.current.screen.width;
-        const screenHeight = appRef.current.screen.height;
+        const appRefScreenWidth = appRef.current.screen.width;
+        const appRefScreenHeight = appRef.current.screen.height;
 
         viewportRef.current = new Viewport({
-            screenWidth,
-            screenHeight,
-            worldWidth: 1000,
-            worldHeight: 1000,
+            screenWidth: appRefScreenWidth,
+            screenHeight: appRefScreenHeight,
+            worldWidth: appRefScreenWidth,
+            worldHeight: appRefScreenHeight,
             events: appRef.current.renderer.events,
         });
 
@@ -25,10 +25,10 @@ export const useViewport = (appRef, stageRef) => {
         viewportRef.current.addChild(stageRef.current);
 
         // Activate viewportRef plugins
-        viewportRef.current.drag().pinch().wheel().decelerate();
+        viewportRef.current.pinch().drag().wheel().decelerate();
         viewportRef.current.clampZoom({
-            minWidth: 500,  // minimum width
-            minHeight: 300,  // minimum height
+            minWidth: 100,  // minimum width
+            minHeight: 100,  // minimum height
             maxWidth: 2000,  // maximum width
             maxHeight: 1500  // maximum height
         });
