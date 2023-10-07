@@ -1,11 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { updateUserProfile } from '../../store/slices/userSlice';
+import { createSelector } from '@reduxjs/toolkit';
+
+
+
 
 const UserProfile = () => {
   // Get the user data from the Redux store
-  const userData = useSelector((state) => state.user.userData);
-  const userId = useSelector((state) => state.auth.userId);
+  const userData = useSelector(state => state.user.userData);
+  const userId = useSelector(state => state.auth.userId);
 
   const dispatch = useDispatch();
   //State for form input, checking first if userData exists
