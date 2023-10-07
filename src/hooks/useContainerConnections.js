@@ -1,11 +1,11 @@
 import { useEffect } from "react";
 import * as PIXI from 'pixi.js';
-export const useContainerConnections = (viewportRef, stageRef, appRef, mainContainerRef, gridContainerRef) => {
+export const useContainerConnections = (viewportRef, stageRef, appRef, mainContainerRef, gridContainerRef, objectsContainerRef) => {
 
     // Main setup
     useEffect(() => {
         // Check for all null references before proceeding
-        const refsToCheck = [viewportRef.current, stageRef.current, appRef.current.stage];
+        const refsToCheck = [viewportRef.current, stageRef.current, appRef.current.stage, gridContainerRef.current, objectsContainerRef.current];
         const refNames = ['viewportRef', 'stageRef', 'appRef.stage'];
 
         refsToCheck.forEach((ref, index) => {
@@ -16,15 +16,19 @@ export const useContainerConnections = (viewportRef, stageRef, appRef, mainConta
         appRef.current.stage.addChild(viewportRef.current);
         const uiContainer = new PIXI.Container();
         appRef.current.stage.addChild(uiContainer);
+
+        //move this to a new independent file
         const inventorySprite = PIXI.Sprite.from(process.env.PUBLIC_URL + '/InventoryBag.svg');
         inventorySprite.y = appRef.current.screen.height;
-        console.log("inventorySpriteY:" +inventorySprite.y);
-     
+        console.log("inventorySpriteY:" + inventorySprite.y);
+
 
         // Add mainContainer to the viewport
         viewportRef.current.addChild(mainContainerRef.current);
 
-        mainContainerRef.current.addChild(gridContainerRef.current);
+        //z index specified to ensure loading order of objects on top
+        mainContainerRef.current.addChildAt(gridContainerRef.current, 0);
+        mainContainerRef.current.addChildAt(objectsContainerRef.current, 1);
 
 
 
