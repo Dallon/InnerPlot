@@ -1,24 +1,19 @@
-import React, { useEffect, useRef, useState, useCallback } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import React, { useRef, useState, useCallback } from 'react';
+import { useDispatch } from 'react-redux';
 import * as PIXI from 'pixi.js';
 import { useViewport } from '../hooks/useViewport';
 import { usePixiApp } from '../hooks/usePixiApp';
 import { useLoadSVG } from '../hooks/useLoadSVG';
-import { addPixiObject} from '../utils/pixiUtils';
 import { useCreateIsoGrid } from '../hooks/useCreateIsoGrid';
 import { useLoadItems } from '../hooks/useLoadItems';
+import { useRemoveItems } from '../hooks/useRemoveItems';
 import { useContainerConnections } from '../hooks/useContainerConnections';
 import { useCenterContainers } from '../hooks/useCenterContainers';
-import { InventoryUI } from './ui/InventoryUI';
 import { useCreateInventoryIcon } from '../hooks/useCreateInventoryIcon';
 
 const PixiCanvasComponent = () => {
-    // Dispatch an action to the Redux store
+    // load dispatch variable
     const dispatch = useDispatch();
-
-    //Extract gameState from the Redux store, runs whenever the component renders
-    //unless gameState hasnt changed since previous render
-    const gameState = useSelector((state) => state.gameState);
 
     //create an app reference
     const appRef = usePixiApp();
@@ -41,47 +36,37 @@ const PixiCanvasComponent = () => {
     const tileWidth = 64; // or your specific value
     const tileHeight = 64; // or your specific value
 
-    // Define the callback function here, right after your state and ref setup
-    const handleTextureLoaded = useCallback((loadedTexture) => {
-        setTexture(loadedTexture); // Or do something else
-    }, []);
-
     //declaring the svgURL and the useLoadSVG hook outside the useEffect below
     const svgURL = process.env.PUBLIC_URL + '/squareIsoTest4.svg';
 
-    const loadedTexture = useLoadSVG(svgURL, gridContainerRef, handleTextureLoaded);
-    
-    useEffect(() => {
-        if (loadedTexture) {
-            setTexture(loadedTexture);
-        }
-    }, [loadedTexture]);
+        const handleTextureLoaded = useCallback((newlyLoadedTexture) => {
+        setTexture(newlyLoadedTexture); // Or do something else
+    }, []);
+
+
+    const loadedTexture = useLoadSVG(svgURL, handleTextureLoaded);
+   
 
     //create a reference for the objectsContainer
     const objectsContainerRef = useRef(new PIXI.Container());
+    useCreateInventoryIcon(appRef);
+    
+    // This is the useEffect to render the isometric tiles using the loaded texture
+   useCreateIsoGrid(gridContainerRef, texture, tileWidth, tileHeight);
 
     //connect the app -> stage -> viewport -> main container -> grid container
-    useContainerConnections(viewportRef, stageRef, appRef, mainContainerRef, gridContainerRef);
-    useCreateInventoryIcon(appRef);
+    useContainerConnections(viewportRef, stageRef, appRef, mainContainerRef, gridContainerRef, objectsContainerRef); 
+   
+
     useCenterContainers(mainContainerRef, gridContainerRef);
 
-    // This is the useEffect to render the isometric tiles using the loaded texture
-    useCreateIsoGrid(gridContainerRef, texture, tileWidth, tileHeight);
 
-    // Use the hook to load and display items on the grid container
-    useLoadItems(gridContainerRef);
+
+    // Use the hook to load and display items on the object container
+    useLoadItems(objectsContainerRef);
+    useRemoveItems(objectsContainerRef);
   
-    // addPixiObjectToStage handles the access to objectsContainerRef.current, ensuring it is defined correctly when addPixiObject is called
-    const addPixiObjectToStage = useCallback((object) => {
-        addPixiObject(object, objectsContainerRef.current);
-    }, [objectsContainerRef]);
-
-    // Watch for gameState.objects.byId changes and initialize PixiJS objects if change occurs
-    useEffect(() => {
-        //each array object is passed to addPixiObjectToStage which calls addPixiObject with stageRef.current and the object
-        Object.values(gameState.objects.byId).forEach(addPixiObjectToStage);
-    }, [gameState.objects.byId]);
-
+  
     return (<div id="pixi-container">
     </div>);
 }
