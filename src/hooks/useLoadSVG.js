@@ -1,10 +1,10 @@
 import { useEffect } from 'react';
 import { loadSVGAsTexture } from '../utils/loadSVGAsTexture';
 
-export const useLoadSVG = (url, container, onTextureLoaded) => {
+export const useLoadSVG = (url, onTextureLoaded) => {
     useEffect(() => {
         let isMounted = true;
-        console.log('useLoadSVG effect started', { url, container });
+        console.log('useLoadSVG effect started', { url });
 
         loadSVGAsTexture(url)
             .then(texture => {
@@ -19,6 +19,6 @@ export const useLoadSVG = (url, container, onTextureLoaded) => {
         return () => {
             isMounted = false;
         };
-    }, [url, container]);
+    }, [url]);
 
 };
