@@ -24,6 +24,7 @@ export const loadSVGAsTexture = async (svgUrl) => {
         canvas.height = loadedImg.height;
         const ctx = canvas.getContext('2d');
         if (!ctx) throw new Error('2D context not available');
+        //draw the image from 0,0 (on the canvas)
         ctx.drawImage(loadedImg, 0,0);
       
         return PIXI.Texture.from(canvas);
