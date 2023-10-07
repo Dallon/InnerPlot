@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { current } from 'immer';
 
 const initialState = {
   objects: {
@@ -6,18 +7,20 @@ const initialState = {
     // to quickly find and modify an object using its id.
     byId: {
       '1': { x: 100, y: 100, url: process.env.PUBLIC_URL + '/blue.svg', id: '1' },
-      '2': { x: 100, y: 150, url: process.env.PUBLIC_URL + '/gear.svg', id: '2' }
+      '2': { x: 200, y: 150, url: process.env.PUBLIC_URL + '/gear.svg', id: '2' }
     },
     //allIds is an array that holds all the ids in the order they were 
     //added or based on some other sorting criteria
     // It is useful for scenarios where you need to know the order 
     //of objects or iterate over them in a specific sequence.
-    allIds: ['1', '2']
+    allIds: ['1', '2'],
+    toBeRemoved: [],
   },
   inventory: {
     byId: {},
     allIds: []
   }
+ 
 };
 
 export const gameStateSlice = createSlice({
@@ -28,13 +31,21 @@ export const gameStateSlice = createSlice({
       const newObject = action.payload;
       state.objects.byId[newObject.id] = newObject;
       state.objects.allIds.push(newObject.id);
+      
     },
     removeObject: (state, action) => {
       const idToRemove = action.payload;
-      console.log("Before delete:", {...state.objects.byId});
+      //proxy objects *parsed to a string for better debugging
+      console.log("Before delete:", JSON.parse(JSON.stringify(state.objects.byId)));
+      state.objects.toBeRemoved.push(idToRemove);
       delete state.objects.byId[idToRemove];
-      console.log("After delete:", {...state.objects.byId});
+      console.log("After delete:", JSON.parse(JSON.stringify(state.objects.byId)));
+      
       state.objects.allIds = state.objects.allIds.filter(id => id !== idToRemove);
+    },
+
+    clearToBeRemoved: (state) => {
+      state.objects.toBeRemoved = [];
     },
     addInventoryItem: (state, action) => {
       const newItem = action.payload;
@@ -43,11 +54,13 @@ export const gameStateSlice = createSlice({
     },
     removeInventoryItem: (state, action) => {
       const idToRemove = action.payload;
-      delete state.inventory.byId[idToRemove];
+      const { [idToRemove]: _, ...newById } = state.objects.byId;
+      state.objects.byId = newById;
+
       state.inventory.allIds = state.inventory.allIds.filter(id => id !== idToRemove);
     },
   },
 });
 
-export const { addObject, removeObject, addInventoryItem, removeInventoryItem } = gameStateSlice.actions;
+export const { addObject, removeObject, addInventoryItem, removeInventoryItem, clearToBeRemoved } = gameStateSlice.actions;
 export const gameStateReducer = gameStateSlice.reducer;
