@@ -2,10 +2,15 @@ import { useDispatch, useSelector } from 'react-redux';
 import * as PIXI from 'pixi.js';
 import { toggleInventory } from '../store/slices/uiSlice';
 import { useEffect } from 'react';
+import { createSelector } from '@reduxjs/toolkit';
 
+const inventoryBoolean = createSelector(
+  state => state.ui.isInventoryOpen,
+  isInventoryOpen => Object.values(isInventoryOpen)
+);
 export const useCreateInventoryIcon = (appRef) => {
     const dispatch = useDispatch();
-    const isInventoryOpen = useSelector((state) => state.ui.isInventoryOpen);
+    const isInventoryOpen = useSelector(inventoryBoolean);
     useEffect (() => {
         if (!appRef.current) {
           console.log("appRef is not current" + appRef.current);
@@ -25,7 +30,7 @@ export const useCreateInventoryIcon = (appRef) => {
 
 
     // Add interactivity
-    inventorySprite.interactive = true;
+    inventorySprite.eventMode = 'dynamic';
     inventorySprite.buttonMode = true;
     inventorySprite.on('pointerdown', () => dispatch(toggleInventory()));
 
