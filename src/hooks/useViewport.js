@@ -4,7 +4,6 @@ import { Viewport } from 'pixi-viewport';
 
 
 export const useViewport = (appRef, stageRef) => {
-    console.log("debug");
     const viewportRef = useRef(null);
 
     useEffect(() => {
