@@ -2,12 +2,13 @@
 import * as PIXI from 'pixi.js';
 
 
-export const addPixiObject = (object, stage) => {
+export const addPixiObject = (object, container) => {
     const graphics = new PIXI.Graphics();
     graphics.beginFill(object.type === 'tree' ? 0x00FF00 : 0xFF0000);
     graphics.drawCircle(object.x, object.y, 10);
     graphics.endFill();
-    stage.addChild(graphics);
+
+    container.addChild(graphics);
 };
 
 export const centerContainer = (parentContainer, childContainer) => {
