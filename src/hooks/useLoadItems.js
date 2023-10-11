@@ -1,49 +1,59 @@
-// useLoadItems.js
 import { useEffect } from 'react';
 import * as PIXI from 'pixi.js';
 import { useSelector, useDispatch } from 'react-redux';
-import { loadSVGAsTexture } from '../utils/loadSVGAsTexture';
+import { loadPNGAsTexture } from '../utils/loadPNGAsTexture';
 import { addInventoryItem, removeObject } from '../store/slices/gameStateSlice';
 import { createSelector } from 'reselect';
 
+// Memoized selector to access the objects in gameState
 const selectObjectsById = createSelector(
   state => state.gameState.objects.byId,
   byId => Object.values(byId),
 );
 
-export const useLoadItems = (containerRef) => {
+export const useLoadItems = (containerRef, itemContainersRefs) => {
   const dispatch = useDispatch();
   const itemsFromState = useSelector(selectObjectsById);
 
   useEffect(() => {
     containerRef.current.removeChildren();
-    itemsFromState.forEach(async item => {
-      // Convert Cartesian coordinates to isometric
+
+    itemsFromState.forEach(async (item) => {
+      // Ensure there's a PIXI container for each item
+      if (!itemContainersRefs[item.id]) {
+        const newItemContainer = new PIXI.Container();
+        newItemContainer.interactive = true;  //Make the container interactive
+        itemContainersRefs[item.id] = newItemContainer;
+      }
+      const itemContainer = itemContainersRefs[item.id];
+
       const isoX = (item.x - item.y) / 2;
       const isoY = (item.x + item.y) / 2;
-      console.log("Is it duplicating?")
 
       try {
-        const texture = await loadSVGAsTexture(item.url);
+        const texture = await loadPNGAsTexture(item.url);
         const itemSprite = new PIXI.Sprite(texture);
         itemSprite.x = isoX;
         itemSprite.y = isoY;
         itemSprite.name = item.id;
 
-        // Event Logic
-        itemSprite.eventMode = 'dynamic';
-        itemSprite.buttonMode = true;
-        itemSprite.on('pointerdown', () => {
+        // Assign hitArea to the container to match the sprite's size
+        itemContainer.hitArea = new PIXI.Rectangle(0, 0, itemSprite.width, itemSprite.height); 
+
+
+        // Apply the pointerdown interaction to the container
+        itemContainer.on('pointerdown', () => {
           dispatch(addInventoryItem({ id: item.id, type: item.type }));
           dispatch(removeObject(item.id));
+          containerRef.current.removeChild(itemContainer);  // Remove the container containing sprite
         });
 
-        // Add sprite to container
-        containerRef.current.addChild(itemSprite);
-        
+        itemContainer.addChild(itemSprite);
+        containerRef.current.addChild(itemContainer);
+
       } catch (error) {
         console.error('Error in loading texture:', error);
       }
     });
-  }, [itemsFromState, containerRef.current]);
+  }, [itemsFromState, containerRef, itemContainersRefs, dispatch]);
 };
