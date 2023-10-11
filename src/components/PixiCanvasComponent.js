@@ -1,15 +1,14 @@
-import React, { useRef, useState, useCallback } from 'react';
+import React, { useRef } from 'react';
 import { useDispatch } from 'react-redux';
 import * as PIXI from 'pixi.js';
-import { useViewport } from '../hooks/useViewport';
 import { usePixiApp } from '../hooks/usePixiApp';
-import { useLoadSVG } from '../hooks/useLoadSVG';
 import { useCreateIsoGrid } from '../hooks/useCreateIsoGrid';
 import { useLoadItems } from '../hooks/useLoadItems';
 import { useRemoveItems } from '../hooks/useRemoveItems';
 import { useContainerConnections } from '../hooks/useContainerConnections';
 import { useCenterContainers } from '../hooks/useCenterContainers';
 import { useCreateInventoryIcon } from '../hooks/useCreateInventoryIcon';
+import { useInventoryContainer } from '../hooks/useInventoryContainer';
 
 const PixiCanvasComponent = () => {
     // load dispatch variable
@@ -17,54 +16,47 @@ const PixiCanvasComponent = () => {
 
     //create an app reference
     const appRef = usePixiApp();
+    
+       // Initialize stageRef with a new PIXI Container so it can be used in useEffects
+       const stageRef = useRef(new PIXI.Container()); 
 
-    // Initialize stageRef with a new PIXI Container so it can be used in useEffects
-    const stageRef = useRef(new PIXI.Container());
 
     //create a reference for the mainContainer
     const mainContainerRef = useRef(new PIXI.Container());
-
-    //get the viewport Ref
-    const viewportRef = useViewport(appRef, stageRef);
+    mainContainerRef.name = 'mainContainer';
 
     //get the gridContainerRef
     const gridContainerRef = useRef(new PIXI.Container());
-
-    const [texture, setTexture] = useState(null);
-
-    // Define the tile width and height according to your requirements
-    const tileWidth = 64; // or your specific value
-    const tileHeight = 64; // or your specific value
-
-    //declaring the svgURL and the useLoadSVG hook outside the useEffect below
-    const svgURL = process.env.PUBLIC_URL + '/squareIsoTest4.svg';
-
-        const handleTextureLoaded = useCallback((newlyLoadedTexture) => {
-        setTexture(newlyLoadedTexture); // Or do something else
-    }, []);
-
-
-    const loadedTexture = useLoadSVG(svgURL, handleTextureLoaded);
-   
+    gridContainerRef.name = 'gridContainer';
 
     //create a reference for the objectsContainer
     const objectsContainerRef = useRef(new PIXI.Container());
+    objectsContainerRef.name = 'objectContainer';
+
+    //create a reference to the item container for each item
+    const itemContainerRefs = useRef();
+
+
+    //create the inventory Icon, append to the app.
     useCreateInventoryIcon(appRef);
+
+    //create a reference for the inventory container
+    const inventoryContainerRef = useRef(new PIXI.Container());
+
     
     // This is the useEffect to render the isometric tiles using the loaded texture
-   useCreateIsoGrid(gridContainerRef, texture, tileWidth, tileHeight);
+   useCreateIsoGrid(gridContainerRef);
 
     //connect the app -> stage -> viewport -> main container -> grid container
-    useContainerConnections(viewportRef, stageRef, appRef, mainContainerRef, gridContainerRef, objectsContainerRef); 
-   
-
+    useContainerConnections(appRef, stageRef, mainContainerRef, gridContainerRef, objectsContainerRef, inventoryContainerRef); 
+    
+    //center the containers
     useCenterContainers(mainContainerRef, gridContainerRef);
 
 
-
     // Use the hook to load and display items on the object container
-    useLoadItems(objectsContainerRef);
-    useRemoveItems(objectsContainerRef);
+    useLoadItems(objectsContainerRef, itemContainerRefs);
+    useRemoveItems(objectsContainerRef, itemContainerRefs);
   
   
     return (<div id="pixi-container">
