@@ -33,7 +33,9 @@ export class IsoGrid {
 
     // Create an isometric tile sprite
      createIsometricTile(texture, x, y, tileWidth, tileHeight) {
+        
         const tileSprite = new PIXI.Sprite(texture);
+      
         // tileSprite.anchor.set(0.5, 1);  // Anchor at bottom center-- does nothing.
         tileSprite.pivot.set(tileSprite.width / 2, tileSprite.height / 2);
 
