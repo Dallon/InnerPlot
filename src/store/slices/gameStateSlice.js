@@ -1,13 +1,15 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { current } from 'immer';
+import { AssetManifest } from '../../AssetManifest';
 
 const initialState = {
   objects: {
     //byId is like a lookup table. It allows you
     // to quickly find and modify an object using its id.
     byId: {
-      '1': { x: 100, y: 100, url: process.env.PUBLIC_URL + '/blue.svg', id: '1' },
-      '2': { x: 200, y: 150, url: process.env.PUBLIC_URL + '/gear.svg', id: '2' }
+      '1': { x: 100, y: 100, url: AssetManifest.images.items.blackOakSeedling, id: '1' },
+      '2': { x: 200, y: 150, url: AssetManifest.images.items.bluePotion, id: '2' }
+
     },
     //allIds is an array that holds all the ids in the order they were 
     //added or based on some other sorting criteria
@@ -16,6 +18,7 @@ const initialState = {
     allIds: ['1', '2'],
     toBeRemoved: [],
   },
+  //inventory handles inventory item state.
   inventory: {
     byId: {},
     allIds: []
