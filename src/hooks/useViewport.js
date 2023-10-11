@@ -24,7 +24,7 @@ export const useViewport = (appRef, stageRef) => {
         viewportRef.current.addChild(stageRef.current);
 
         // Activate viewportRef plugins
-        viewportRef.current.pinch().drag().wheel().decelerate();
+        viewportRef.current.pinch().drag({ keyToPress: ['ShiftLeft', 'ShiftRight'] }).wheel().decelerate();
         viewportRef.current.clampZoom({
             minWidth: 100,  // minimum width
             minHeight: 100,  // minimum height
