@@ -17,7 +17,6 @@ const initialState = {
     allIds: ['1', '2'],
     toBeRemoved: [],
   },
-
  
 };
 
@@ -49,5 +48,5 @@ export const gameStateSlice = createSlice({
   },
 });
 
-export const { addObject, removeObject,  clearToBeRemoved } = gameStateSlice.actions;
+export const { addObject, removeObject, clearToBeRemoved } = gameStateSlice.actions;
 export const gameStateReducer = gameStateSlice.reducer;

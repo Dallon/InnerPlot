@@ -2,8 +2,8 @@ import { useEffect } from 'react';
 import * as PIXI from 'pixi.js';
 import { useSelector, useDispatch } from 'react-redux';
 import { loadPNGAsTexture } from '../utils/loadPNGAsTexture';
-import { removeObject } from '../store/slices/gameStateSlice';
-import { addInventoryItem } from '../store/slices/inventorySlice';
+import { addInventoryItem, removeObject } from '../store/slices/gameStateSlice';
+import { handleObjectClick } from '../store/thunks/handleObjectClickThunk';
 import { createSelector } from 'reselect';
 
 // Memoized selector to access the objects in gameState
