@@ -1,11 +1,11 @@
 import { useDispatch, useSelector } from 'react-redux';
 import * as PIXI from 'pixi.js';
-import { toggleInventory } from '../store/slices/uiSlice';
+import { toggleInventory } from '../store/slices/inventorySlice';
 import { useEffect } from 'react';
 import { createSelector } from '@reduxjs/toolkit';
 
 const inventoryBoolean = createSelector(
-  state => state.ui.isInventoryOpen,
+  state => state.inventory.isInventoryOpen,
   isInventoryOpen => Object.values(isInventoryOpen)
 );
 export const useCreateInventoryIcon = (appRef) => {
