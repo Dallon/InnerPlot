@@ -18,11 +18,6 @@ const initialState = {
     allIds: ['1', '2'],
     toBeRemoved: [],
   },
-  //inventory handles inventory item state.
-  inventory: {
-    byId: {},
-    allIds: []
-  }
  
 };
 
@@ -50,20 +45,9 @@ export const gameStateSlice = createSlice({
     clearToBeRemoved: (state) => {
       state.objects.toBeRemoved = [];
     },
-    addInventoryItem: (state, action) => {
-      const newItem = action.payload;
-      state.inventory.byId[newItem.id] = newItem;
-      state.inventory.allIds.push(newItem.id);
-    },
-    removeInventoryItem: (state, action) => {
-      const idToRemove = action.payload;
-      const { [idToRemove]: _, ...newById } = state.objects.byId;
-      state.objects.byId = newById;
-
-      state.inventory.allIds = state.inventory.allIds.filter(id => id !== idToRemove);
-    },
+    
   },
 });
 
-export const { addObject, removeObject, addInventoryItem, removeInventoryItem, clearToBeRemoved } = gameStateSlice.actions;
+export const { addObject, removeObject, clearToBeRemoved } = gameStateSlice.actions;
 export const gameStateReducer = gameStateSlice.reducer;

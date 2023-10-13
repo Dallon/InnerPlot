@@ -9,30 +9,43 @@ const selectObjectsToRemove = createSelector(
     toBeRemoved => Object.values(toBeRemoved),
   );
   
-  export const useRemoveItems = (containerRef, itemContainerRefs) => {
+  export const useRemoveItems = (objectContainerRef, itemContainerRefs) => {
     const toBeRemoved = useSelector(selectObjectsToRemove);
     const dispatch = useDispatch();
   
     useEffect(() => {
-      let removalOccurred = false; // Track if at least one item was removed
+      if(!itemContainerRefs){
+        return;
+      }
+      let removalOccurred = false; 
   
       toBeRemoved.forEach(id => {
         // Access the item's container directly using its ID
+
+        console.log('toBeRemoved contains:', toBeRemoved);
+
+
+        if (typeof id === 'object') {
+          console.error('Received an object for ID:', id);
+          return;
+        }
         const itemContainerToRemove = itemContainerRefs[id];
   
         if (itemContainerToRemove) {
           console.log("The id of the sprite container being removed is: " + id);
-          containerRef.current.removeChild(itemContainerToRemove);
+          objectContainerRef.current.removeChild(itemContainerToRemove);
           removalOccurred = true;
-        } else {
+      } else if(id) {
           console.log("Container not found for ID: " + id);
-        }
+      } else {
+          console.log("Attempted to remove an item, but the ID was undefined.");
+      }
       });
   
       // If we've removed at least one item, clear the toBeRemoved list
       if (removalOccurred) {
         dispatch(clearToBeRemoved());
       }
-    }, [toBeRemoved, containerRef, itemContainerRefs, dispatch]);
+    }, [toBeRemoved, dispatch]);
   };
   
