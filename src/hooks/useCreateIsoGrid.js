@@ -2,6 +2,7 @@ import { IsoGrid } from "../utils/IsoGridUtil";
 import { useEffect } from "react";
 import { useState, useCallback } from 'react';
 import { useLoadPNG } from '../hooks/useLoadPNG';
+import { AssetManifest } from "../AssetManifest";
 
 // This is the useEffect to render the isometric tiles using the texture
 export const useCreateIsoGrid = (gridContainerRef) => {
@@ -14,7 +15,7 @@ export const useCreateIsoGrid = (gridContainerRef) => {
     const tileHeight = 64; 
 
     //declaring the svgURL and the useLoadSVG hook outside the useEffect below
-    const pngURL = process.env.PUBLIC_URL + '/squareIsoTest4.png';
+    const pngURL = AssetManifest.images.textures.grass;
 
         const handleTextureLoaded = useCallback((newlyLoadedTexture) => {
         setTexture(newlyLoadedTexture); 

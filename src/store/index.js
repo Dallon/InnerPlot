@@ -3,8 +3,8 @@ import { authReducer } from './slices/authSlice';
 import { gameStateReducer } from './slices/gameStateSlice';
 import { boxSliceReducer } from './slices/boxSlice';
 import { userReducer } from './slices/userSlice';
-import { uiReducer } from './slices/uiSlice';
-import {userModeReducer} from './slices/userModeSlice';
+import { inventoryReducer } from './slices/inventorySlice';
+// import {userModeReducer} from './slices/userModeSlice';
 
 export const store = configureStore({
     reducer: {
@@ -12,7 +12,7 @@ export const store = configureStore({
         gameState: gameStateReducer,
         boxState: boxSliceReducer,
         user: userReducer,
-        ui: uiReducer,
-        userMode: userModeReducer,
+        inventory: inventoryReducer,
+        // userMode: userModeReducer,
     },
 });
