@@ -4,7 +4,7 @@ import * as PIXI from 'pixi.js';
 import { useSelector } from 'react-redux';
 
 export const useInventoryContainer = (appRef, inventoryContainerRef) => {
-    const inventoryOpen = useSelector(state => state.ui.isInventoryOpen);
+    const inventoryOpen = useSelector(state => state.inventory.isInventoryOpen);
 
     useEffect(() => {
         console.log(appRef.current.stage.children);
@@ -15,10 +15,10 @@ export const useInventoryContainer = (appRef, inventoryContainerRef) => {
 
         // Set Dimensions
        
-        inventoryContainerRef.current.name = 'inventory';
+        inventoryContainerRef.current.name = 'inventoryContainer';
 
      
-        // set background color for inventory
+        // set background color for inventory. Here this gets loaded every time we click the inventory which is bad.
         const graphics = new PIXI.Graphics();
         graphics.beginFill(0xFFFFFF, 0.2); // Solid red for clear visibility
         graphics.drawRect(0, 0, 500, 300);
