@@ -44,14 +44,10 @@ export const useLoadItems = (containerRef, itemContainersRefs) => {
 
         // Apply the pointerdown interaction to the container
         itemContainer.on('pointerdown', () => {
-          dispatch(addInventoryItem({ id: item.id, type: item.type }));
-          dispatch(removeObject(item.id));
-          containerRef.current.removeChild(itemContainer);  // Remove the container containing sprite
+          dispatch(handleObjectClick(item.id));
         });
 
-        itemContainer.addChild(itemSprite);
-        containerRef.current.addChild(itemContainer);
-
+  
       } catch (error) {
         console.error('Error in loading texture:', error);
       }
