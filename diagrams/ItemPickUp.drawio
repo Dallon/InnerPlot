@@ -1,0 +1,118 @@
+<mxfile host="app.diagrams.net" modified="2023-10-12T23:19:57.839Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/118.0.0.0 Safari/537.36" etag="EEaNlp6-9gHDzWRsZsFT" version="22.0.4" type="github">
+  <diagram name="Page-1" id="1XnRESNZ3BtyHW_SzhEM">
+    <mxGraphModel dx="1411" dy="1864" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <object label="&lt;b&gt;GameObject Container&lt;/b&gt;&lt;br&gt;&lt;div style=&quot;text-align: left; font-size: 10px;&quot;&gt;&lt;ul style=&quot;&quot;&gt;&lt;li style=&quot;font-weight: bold;&quot;&gt;&lt;span style=&quot;background-color: initial; font-weight: normal;&quot;&gt;contains the visual representation of the objects (Sprites)&lt;/span&gt;&lt;/li&gt;&lt;li style=&quot;&quot;&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;Sprites are created with an event trigger property, on.pointerdown()&lt;/span&gt;&lt;/li&gt;&lt;/ul&gt;&lt;/div&gt;" Annotation="This component represents individual game objects on the screen. When a user clicks on one of these objects, it triggers an action to process the object, often moving it from the game state to the player&#39;s inventory." id="YKL24aYWbiluwBa3NFLS-2">
+          <mxCell style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+            <mxGeometry x="10" y="-1095" width="200" height="120" as="geometry" />
+          </mxCell>
+        </object>
+        <mxCell id="YKL24aYWbiluwBa3NFLS-3" value="" style="shape=flexArrow;endArrow=classic;html=1;rounded=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;width=11;endSize=8.44;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="1" source="YKL24aYWbiluwBa3NFLS-2" target="YKL24aYWbiluwBa3NFLS-5" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="200" y="-1035.5" as="sourcePoint" />
+            <mxPoint x="340" y="-1035.5" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="YKL24aYWbiluwBa3NFLS-4" value="Pointerdown event&lt;br&gt;&amp;nbsp;(sprite click)" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="YKL24aYWbiluwBa3NFLS-3" vertex="1" connectable="0">
+          <mxGeometry x="-0.0762" y="-1" relative="1" as="geometry">
+            <mxPoint x="-1" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <object label="&lt;b&gt;handleObjectClick Thunk&lt;/b&gt;&lt;br&gt;&lt;div style=&quot;&quot;&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;process combined logic after game object is clicked&lt;/span&gt;&lt;/div&gt;" Annotation="A Redux thunk action that orchestrates what happens when a game object is clicked. It combines multiple actions: removing the object from the game&#39;s active state and adding it to the player&#39;s inventory. This ensures state consistency across different slices." id="YKL24aYWbiluwBa3NFLS-5">
+          <mxCell style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+            <mxGeometry x="350" y="-1070" width="210" height="70" as="geometry" />
+          </mxCell>
+        </object>
+        <mxCell id="YKL24aYWbiluwBa3NFLS-6" value="" style="shape=flexArrow;endArrow=classic;html=1;rounded=0;exitX=0.25;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="1" source="YKL24aYWbiluwBa3NFLS-5" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="400" y="-750" as="sourcePoint" />
+            <mxPoint x="320" y="-890" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="YKL24aYWbiluwBa3NFLS-7" value="add game object item id&lt;br&gt;&amp;nbsp;to toBeRemoved" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="YKL24aYWbiluwBa3NFLS-6" vertex="1" connectable="0">
+          <mxGeometry x="-0.115" y="1" relative="1" as="geometry">
+            <mxPoint y="-1" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="YKL24aYWbiluwBa3NFLS-9" value="" style="shape=flexArrow;endArrow=classic;html=1;rounded=0;width=12;endSize=5.66;entryX=0.5;entryY=0;entryDx=0;entryDy=0;exitX=0.75;exitY=1;exitDx=0;exitDy=0;" parent="1" source="YKL24aYWbiluwBa3NFLS-5" target="YKL24aYWbiluwBa3NFLS-16" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="470" y="-990" as="sourcePoint" />
+            <mxPoint x="590" y="-870" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="YKL24aYWbiluwBa3NFLS-10" value="addInventoryItem" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="YKL24aYWbiluwBa3NFLS-9" vertex="1" connectable="0">
+          <mxGeometry x="-0.2288" y="-3" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <object label="&lt;b&gt;objectsSlice&lt;/b&gt;&lt;br&gt;&lt;div style=&quot;text-align: left; font-size: 10px;&quot;&gt;&lt;ul&gt;&lt;li&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;&lt;font style=&quot;font-size: 10px;&quot;&gt;maintains game objects&#39; state&lt;/font&gt;&lt;/span&gt;&lt;/li&gt;&lt;li&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;byId: object details&lt;/span&gt;&lt;br&gt;&lt;/li&gt;&lt;li&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;allIds: IDs of all game objects&lt;/span&gt;&lt;/li&gt;&lt;li&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;toBeRemoved: Objects marked for removal&lt;/span&gt;&lt;/li&gt;&lt;/ul&gt;&lt;/div&gt;" Annotation="he primary state management for game objects. Here we track all game objects, their details, and a special list of objects marked for removal. Objects in the toBeRemoved list are visually removed from the screen in useRemoveItems and then cleared from this state." id="YKL24aYWbiluwBa3NFLS-12">
+          <mxCell style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+            <mxGeometry x="170" y="-880" width="220" height="130" as="geometry" />
+          </mxCell>
+        </object>
+        <mxCell id="YKL24aYWbiluwBa3NFLS-13" value="" style="shape=flexArrow;endArrow=classic;html=1;rounded=0;exitX=0.25;exitY=1;exitDx=0;exitDy=0;entryX=0.25;entryY=0;entryDx=0;entryDy=0;" parent="1" source="YKL24aYWbiluwBa3NFLS-12" target="YKL24aYWbiluwBa3NFLS-15" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="250" y="-780" as="sourcePoint" />
+            <mxPoint x="390" y="-640" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="YKL24aYWbiluwBa3NFLS-14" value="1) toBeRemoved&lt;br&gt;&amp;nbsp;list updated" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="YKL24aYWbiluwBa3NFLS-13" vertex="1" connectable="0">
+          <mxGeometry x="0.0085" y="2" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="YKL24aYWbiluwBa3NFLS-33" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0;exitY=0;exitDx=0;exitDy=0;entryX=0.25;entryY=1;entryDx=0;entryDy=0;" parent="1" source="YKL24aYWbiluwBa3NFLS-15" target="YKL24aYWbiluwBa3NFLS-2" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="60" y="-660" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="YKL24aYWbiluwBa3NFLS-34" value="2) Remove container&lt;br&gt;from objectContainer" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="YKL24aYWbiluwBa3NFLS-33" vertex="1" connectable="0">
+          <mxGeometry x="0.2973" y="3" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <object label="&lt;b&gt;useRemoveItems&lt;/b&gt;&lt;br&gt;&lt;div style=&quot;text-align: left; font-size: 10px;&quot;&gt;&lt;ul&gt;&lt;li&gt;&lt;span style=&quot;background-color: initial; font-size: 10px;&quot;&gt;Observes changes in toBeRemoved&lt;/span&gt;&lt;/li&gt;&lt;li&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;Visually removes game objects&lt;/span&gt;&lt;/li&gt;&lt;/ul&gt;&lt;/div&gt;" Annotation="A custom React hook that listens for changes in the toBeRemoved list from the objectsSlice. When IDs appear in this list, it means these objects need to be visually removed from the objectContainer. Once the visual removal process is completed, it dispatches an action to clear the toBeRemoved list" id="YKL24aYWbiluwBa3NFLS-15">
+          <mxCell style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+            <mxGeometry x="170" y="-660" width="220" height="110" as="geometry" />
+          </mxCell>
+        </object>
+        <object label="&lt;b&gt;inventorySlice&lt;/b&gt;&lt;br&gt;&lt;div style=&quot;text-align: left; font-size: 10px;&quot;&gt;&lt;ul&gt;&lt;li&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;&lt;font style=&quot;font-size: 10px;&quot;&gt;maintains inventory objects&#39; state&lt;/font&gt;&lt;/span&gt;&lt;/li&gt;&lt;li&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;byId: object details&lt;/span&gt;&lt;br&gt;&lt;/li&gt;&lt;li&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;allIds: IDs of all game objects&lt;/span&gt;&lt;/li&gt;&lt;/ul&gt;&lt;/div&gt;" Annotation="This slice manages the player&#39;s inventory state. When objects are added to the inventory, their details are stored here. This slice also facilitates the removal of items from the inventory if required" id="YKL24aYWbiluwBa3NFLS-16">
+          <mxCell style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+            <mxGeometry x="470" y="-870" width="220" height="130" as="geometry" />
+          </mxCell>
+        </object>
+        <mxCell id="YKL24aYWbiluwBa3NFLS-17" value="" style="shape=flexArrow;endArrow=classic;html=1;rounded=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="1" source="YKL24aYWbiluwBa3NFLS-15" target="YKL24aYWbiluwBa3NFLS-25" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="420" y="-540" as="sourcePoint" />
+            <mxPoint x="530" y="-520" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="YKL24aYWbiluwBa3NFLS-19" value="Visual removal of object" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="YKL24aYWbiluwBa3NFLS-17" vertex="1" connectable="0">
+          <mxGeometry x="-0.1737" y="2" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="YKL24aYWbiluwBa3NFLS-22" value="" style="shape=flexArrow;endArrow=classic;html=1;rounded=0;exitX=0.75;exitY=0;exitDx=0;exitDy=0;entryX=0.75;entryY=1;entryDx=0;entryDy=0;endWidth=29;endSize=5.35;" parent="1" source="YKL24aYWbiluwBa3NFLS-15" target="YKL24aYWbiluwBa3NFLS-12" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="510" y="-620" as="sourcePoint" />
+            <mxPoint x="560" y="-670" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="YKL24aYWbiluwBa3NFLS-23" value="dispatch(removeObject)" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="YKL24aYWbiluwBa3NFLS-22" vertex="1" connectable="0">
+          <mxGeometry x="-0.0548" y="-5" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <object label="&lt;b&gt;PixiCanvasComponent&lt;/b&gt;&lt;br&gt;visual layer of game(sort of)&lt;br&gt;" Annotation="The visual layer of the game where individual game objects are rendered and displayed. It interacts with the useRemoveItems hook to visually remove objects based on the game&#39;s state changes. Soon to be changed.." id="YKL24aYWbiluwBa3NFLS-25">
+          <mxCell style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+            <mxGeometry x="195" y="-460" width="170" height="120" as="geometry" />
+          </mxCell>
+        </object>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
