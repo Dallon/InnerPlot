@@ -2,7 +2,8 @@ import { useEffect } from 'react';
 import * as PIXI from 'pixi.js';
 import { useSelector, useDispatch } from 'react-redux';
 import { loadPNGAsTexture } from '../utils/loadPNGAsTexture';
-import { addInventoryItem, removeObject } from '../store/slices/gameStateSlice';
+import { addInventoryItem } from '../store/slices/inventorySlice';
+import { removeObject } from '../store/slices/gameStateSlice';
 import { handleObjectClick } from '../store/thunks/handleObjectClickThunk';
 import { createSelector } from 'reselect';
 
@@ -44,13 +45,20 @@ export const useLoadItems = (containerRef, itemContainersRefs) => {
 
         // Apply the pointerdown interaction to the container
         itemContainer.on('pointerdown', () => {
-          dispatch(handleObjectClick(item.id));
+         handleObjectClick(item);
+          containerRef.current.removeChild(itemContainer);  // Remove the container containing sprite
+      
         });
+
+    itemContainer.addChild(itemSprite);
+          containerRef.current.addChild(itemContainer);
+
+
 
   
       } catch (error) {
         console.error('Error in loading texture:', error);
       }
     });
-  }, [itemsFromState, containerRef, itemContainersRefs, dispatch]);
+  }, []);
 };
