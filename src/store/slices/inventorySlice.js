@@ -15,8 +15,8 @@ export const inventorySlice = createSlice({
   reducers: {
     addInventoryItem: (state, action) => {
       const newItem = action.payload;
-      state.inventory.byId[newItem.id] = newItem;
-      state.inventory.allIds.push(newItem.id);
+      state.byId[newItem.id] = newItem;
+      state.allIds.push(newItem.id);
     },
     removeInventoryItem: (state, action) => {
       const idToRemove = action.payload;
