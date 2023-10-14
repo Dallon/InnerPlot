@@ -26,8 +26,6 @@ const GridItem = ({ item }) => {
 const selectInventoryItems = createSelector(
     state => state.gameState.inventory.byId,
     byId => Object.values(byId),
-    // state => state.gameState.objects.byId,
-    // byId => Object.values(byId),
 );
 
 
