@@ -4,9 +4,13 @@ import { Viewport } from 'pixi-viewport';
 
 
 export const useViewport = (appRef, stageRef) => {
+
+   
+
     const viewportRef = useRef(null);
 
     useEffect(() => {
+         console.log(`useViewport Hook is running`);//debugging
         if (!appRef.current || !stageRef.current) return;
         const appRefScreenWidth = appRef.current.screen.width;
         const appRefScreenHeight = appRef.current.screen.height;
@@ -31,7 +35,7 @@ export const useViewport = (appRef, stageRef) => {
             maxWidth: 2000,  // maximum width
             maxHeight: 1500  // maximum height
         });
-    }, [appRef, stageRef]);
+    }, []);
 
     return viewportRef;
 }
