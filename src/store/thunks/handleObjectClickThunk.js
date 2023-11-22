@@ -1,18 +1,17 @@
+
 import { addInventoryItem } from "../slices/inventorySlice";
-import { removeObject } from "../slices/gameStateSlice";
+import { removeObject } from "../slices/itemsSlice";
 
-// This thunk action creator 
 export const handleObjectClick = (item) => {
-    //dispatch is provided by the redux store.
-    //because we use a thunk we access the middleware dispatch without
-    //importing it.
-    return dispatch => {
-        // Directly add the object to the inventory.
-        dispatch(addInventoryItem({
-            id: item.id
-        }));
+  return (dispatch) => {  // This dispatch is provided automatically by Redux when the thunk is invoked.
+    console.log("handleObjectClick");
 
-        // Then, remove object from game area
-        dispatch(removeObject({ id: item.id }));
-    };
-}
+    // Dispatch remove object
+    dispatch(removeObject(item.id));
+    
+    // Dispatch add to inventory
+    dispatch(addInventoryItem( {itemURL: item.url, itemId: item.id,  itemAssetKey: item.assetKey, quantity: item.quantity,
+       levelReq:item.levelReq, itemType:item.itemType, bonuses:item.bonuses, location:item.location}));
+
+  };
+};
