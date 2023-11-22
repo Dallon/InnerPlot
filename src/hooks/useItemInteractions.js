@@ -1,11 +1,15 @@
 import { useDispatch } from 'react-redux';
-import { addItem } from './path/to/your/gameStateSlice';
 
 // Function to generate a unique ID
 const generateUniqueID = () => Date.now().toString();
 
 export const useItemInteractions = () => {
+
+
+  console.log(`useItemInteractions is running`);//debugging
+
   const dispatch = useDispatch();
+
 
   // General event handler for item clicks
   const handleItemClick = (item, interactionType, currentMode, equippedItems) => {

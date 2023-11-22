@@ -1,24 +1,29 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { clearToBeRemoved } from "../store/slices/gameStateSlice";
+import { clearToBeRemoved } from "../store/slices/itemsSlice";
 import { createSelector } from "@reduxjs/toolkit";
 
 
 const selectObjectsToRemove = createSelector(
-    state => state.gameState.objects.toBeRemoved,
+    state => state.itemState.objects.toBeRemoved,
     toBeRemoved => Object.values(toBeRemoved),
   );
   
   export const useRemoveItems = (objectContainerRef, itemContainerRefs) => {
+
+    console.log(`useRemoveItems hook is running`);//debugging
+
+    
     const toBeRemoved = useSelector(selectObjectsToRemove);
     const dispatch = useDispatch();
   
     useEffect(() => {
       if(!itemContainerRefs){
+      
         return;
       }
       let removalOccurred = false; 
-  
+    console.log(" itemContainerREfs");
       toBeRemoved.forEach(id => {
         // Access the item's container directly using its ID
 
