@@ -1,41 +1,40 @@
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import * as PIXI from 'pixi.js';
 import { toggleInventory } from '../store/slices/inventorySlice';
-import { useEffect } from 'react';
-import { createSelector } from '@reduxjs/toolkit';
+import { useEffect, useContext } from 'react';
+import AppContext from '../contexts/AppContext';
+import { loadPNGAsTexture } from '../utils/loadPNGAsTexture'; 
 
-const inventoryBoolean = createSelector(
-  state => state.inventory.isInventoryOpen,
-  isInventoryOpen => Object.values(isInventoryOpen)
-);
-export const useCreateInventoryIcon = (appRef) => {
-    const dispatch = useDispatch();
-    const isInventoryOpen = useSelector(inventoryBoolean);
-    useEffect (() => {
-        if (!appRef.current) {
-          console.log("appRef is not current" + appRef.current);
+export const useCreateInventoryIcon = () => {
+  const { appRef } = useContext(AppContext);
+  const dispatch = useDispatch();
 
-          return;
-        };
-     
-   const bag = process.env.PUBLIC_URL + '/inventoryBag.svg';
-    const inventoryTexture = PIXI.Texture.from(bag);
-    console.log(inventoryTexture);
-    const inventorySprite = new PIXI.Sprite(inventoryTexture);
+  useEffect(() => {
+    if (!appRef.current) {
+      console.log("appRef is not current" + appRef.current);
+      return;
+    }
 
-    // Position at the bottom of the app screen
+    const bag = process.env.PUBLIC_URL + '/inventoryBag.svg';
+    
+    //utility function to load the texture
+    loadPNGAsTexture(bag).then((inventoryTexture) => {
+      const inventorySprite = new PIXI.Sprite(inventoryTexture);
 
-    inventorySprite.x = appRef.current.screen.width - inventorySprite.width;
-    inventorySprite.y = appRef.current.screen.height - inventorySprite.height;
+      // Position at the bottom of the app screen
+      inventorySprite.x = appRef.current.screen.width - inventorySprite.width;
+      inventorySprite.y = appRef.current.screen.height - inventorySprite.height;
 
+      // Add interactivity
+      inventorySprite.interactive = true;
+      inventorySprite.buttonMode = true;
+      inventorySprite.on('pointerdown', () => dispatch(toggleInventory()));
 
-    // Add interactivity
-    inventorySprite.eventMode = 'dynamic';
-    inventorySprite.buttonMode = true;
-    inventorySprite.on('pointerdown', () => dispatch(toggleInventory()));
-
-    // Add sprite to stage
-    appRef.current.stage.addChild(inventorySprite);
-    //if not appRef.current, nothing loads. not to be confused with appRef, which doesn't have a width value.
-}, [appRef.current]);
-}
+      // Add sprite to stage
+      appRef.current.stage.addChild(inventorySprite);
+      
+    }).catch((error) => {
+      console.error('Error loading inventory icon:', error);
+    });
+  }, [appRef.current]); // Only re-run the effect if appRef.current changes
+};
