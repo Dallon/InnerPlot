@@ -4,19 +4,22 @@ import { useDispatch } from "react-redux";
 import { setAuthenticated, setUserId } from "../store/slices/authSlice";
 
 const useAuthListener = () => {
+
     const dispatch = useDispatch();
 
     useEffect(() => {
+        console.log(`useAuthListener Hook  is running`);//debugging
+
         const detachAuthListener = firebaseInstance.auth()
-        .onAuthStateChanged((user) =>{
-            if (user) {
-                dispatch(setAuthenticated(true));
-                dispatch(setUserId(user.uid));
-            } else {
-                dispatch(setAuthenticated(false));
-                dispatch(setUserId(null));
-            }
-        });
+            .onAuthStateChanged((user) => {
+                if (user) {
+                    dispatch(setAuthenticated(true));
+                    dispatch(setUserId(user.uid));
+                } else {
+                    dispatch(setAuthenticated(false));
+                    dispatch(setUserId(null));
+                }
+            });
         //detaches authStateListener when component unmounts
         return () => detachAuthListener();
     })
