@@ -1,34 +1,31 @@
 import { useEffect } from 'react';
 import * as PIXI from 'pixi.js';
-import { useSelector, useDispatch } from 'react-redux';
 import { loadPNGAsTexture } from '../utils/loadPNGAsTexture';
-import { addInventoryItem } from '../store/slices/inventorySlice';
-import { removeObject } from '../store/slices/gameStateSlice';
 import { handleObjectClick } from '../store/thunks/handleObjectClickThunk';
-import { createSelector } from 'reselect';
-
-// Memoized selector to access the objects in gameState
-const selectObjectsById = createSelector(
-  state => state.gameState.objects.byId,
-  byId => Object.values(byId),
-);
+import { useMemo } from 'react';
+import { store } from '../store';
 
 export const useLoadItems = (containerRef, itemContainersRefs) => {
-  const dispatch = useDispatch();
-  const itemsFromState = useSelector(selectObjectsById);
+
+  const itemsFromState = useMemo(() => {
+    return Object.values(store.getState().itemState.objects.byId);
+  }, [store.getState().itemState.objects.byId]);
 
   useEffect(() => {
+    console.log(`useLoadItems Hook is running`);//debugging
     containerRef.current.removeChildren();
 
+    //for each object in byId
     itemsFromState.forEach(async (item) => {
-      // Ensure there's a PIXI container for each item
+      // if itemContainerRefs array doesnt contain an object associated with key item.id
       if (!itemContainersRefs[item.id]) {
+        //create a new item container, make it interactive, and attach the container to the array with key item.id
         const newItemContainer = new PIXI.Container();
         newItemContainer.interactive = true;  //Make the container interactive
         itemContainersRefs[item.id] = newItemContainer;
       }
-      const itemContainer = itemContainersRefs[item.id];
 
+      const itemContainer = itemContainersRefs[item.id];
       const isoX = (item.x - item.y) / 2;
       const isoY = (item.x + item.y) / 2;
 
@@ -37,27 +34,31 @@ export const useLoadItems = (containerRef, itemContainersRefs) => {
         const itemSprite = new PIXI.Sprite(texture);
         itemSprite.x = isoX;
         itemSprite.y = isoY;
-        itemSprite.name = item.id;
+        itemSprite.id = item.id;
 
         // Assign hitArea to the container to match the sprite's size
-        itemContainer.hitArea = new PIXI.Rectangle(0, 0, itemSprite.width, itemSprite.height); 
+        itemContainer.hitArea = new PIXI.Rectangle(0, 0, itemSprite.width, itemSprite.height);
 
 
         // Apply the pointerdown interaction to the container
         itemContainer.on('pointerdown', () => {
-         handleObjectClick(item);
-          containerRef.current.removeChild(itemContainer);  // Remove the container containing sprite
-      
+          console.log("itemSprite.id is " + item.id);
+          const dispatchFn = handleObjectClick(item);
+          dispatchFn(store.dispatch);
+
+          // Remove the PixiJS container for this item
+          itemContainer.removeChildren(); // This removes the sprite from the container
+          containerRef.current.removeChild(itemContainer); // This removes the container from the PixiJS stage     
+          delete itemContainersRefs[item.id]; //finally, delete the reference to the item id in the container ref.
         });
 
-    itemContainer.addChild(itemSprite);
-          containerRef.current.addChild(itemContainer);
+        itemContainer.addChild(itemSprite);
+        containerRef.current.addChild(itemContainer);
 
 
 
-  
       } catch (error) {
-        console.error('Error in loading texture:', error);
+        console.error('Error in loading texture in useLoadItems:', error);
       }
     });
   }, []);
