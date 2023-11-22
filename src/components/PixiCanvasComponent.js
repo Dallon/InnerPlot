@@ -1,66 +1,59 @@
-import React, { useRef } from 'react';
-import { useDispatch } from 'react-redux';
+import React, { useRef, useEffect, useContext } from 'react';
 import * as PIXI from 'pixi.js';
-import { usePixiApp } from '../hooks/usePixiApp';
-import { useCreateIsoGrid } from '../hooks/useCreateIsoGrid';
 import { useLoadItems } from '../hooks/useLoadItems';
-import { useRemoveItems } from '../hooks/useRemoveItems';
+import { useLoadSprites } from '../hooks/useLoadSprites';
 import { useContainerConnections } from '../hooks/useContainerConnections';
-import { useCenterContainers } from '../hooks/useCenterContainers';
 import { useCreateInventoryIcon } from '../hooks/useCreateInventoryIcon';
-import { useInventoryContainer } from '../hooks/useInventoryContainer';
+import AppContext from '../contexts/AppContext';
+import { memo } from 'react';
 
-const PixiCanvasComponent = () => {
-    // load dispatch variable
-    const dispatch = useDispatch();
+const PixiCanvasComponent =  React.memo(({texture}) => {
+  const { appRef } = useContext(AppContext);
+  const pixiContainerRef = useRef(null);
 
-    //create an app reference
-    const appRef = usePixiApp();
-    
-       // Initialize stageRef with a new PIXI Container so it can be used in useEffects
-       const stageRef = useRef(new PIXI.Container()); 
+  const renderCount = useRef(0);
+  //create a reference for the mainContainer
+  const mainContainerRef = useRef(new PIXI.Container());
 
+  //create a reference for the objectsContainer
+  const objectsContainerRef = useRef(new PIXI.Container());
 
-    //create a reference for the mainContainer
-    const mainContainerRef = useRef(new PIXI.Container());
-    mainContainerRef.name = 'mainContainer';
+  //create a reference to the item container for each item
+  const itemContainerRefs = useRef();
 
-    //get the gridContainerRef
-    const gridContainerRef = useRef(new PIXI.Container());
-    gridContainerRef.name = 'gridContainer';
+  //connect the app -> stage -> viewport -> main container -> grid container
+  useContainerConnections(mainContainerRef, objectsContainerRef, texture);
 
-    //create a reference for the objectsContainer
-    const objectsContainerRef = useRef(new PIXI.Container());
-    objectsContainerRef.name = 'objectContainer';
+  //create the inventory Icon
+  useCreateInventoryIcon();
 
-    //create a reference to the item container for each item
-    const itemContainerRefs = useRef();
+  // Use the hook to load and display items on the object container
+  useLoadItems(objectsContainerRef, itemContainerRefs);
+  // useRemoveItems(objectsContainerRef, itemContainerRefs);
 
+  //use hook to load and display sprites on the object container
+  useLoadSprites(objectsContainerRef, itemContainerRefs);
 
-    //create the inventory Icon, append to the app.
-    useCreateInventoryIcon(appRef);
-
-    //create a reference for the inventory container
-    const inventoryContainerRef = useRef(new PIXI.Container());
-
-    
-    // This is the useEffect to render the isometric tiles using the loaded texture
-   useCreateIsoGrid(gridContainerRef);
-
-    //connect the app -> stage -> viewport -> main container -> grid container
-    useContainerConnections(appRef, stageRef, mainContainerRef, gridContainerRef, objectsContainerRef, inventoryContainerRef); 
-    
-    //center the containers
-    useCenterContainers(mainContainerRef, gridContainerRef);
-
-
-    // Use the hook to load and display items on the object container
-    useLoadItems(objectsContainerRef, itemContainerRefs);
-    useRemoveItems(objectsContainerRef, itemContainerRefs);
   
-  
-    return (<div id="pixi-container">
-    </div>);
-}
+  useEffect(() => {
+    renderCount.current = renderCount.current + 1;
+    console.log(`PixiCanvasComponent render count: ${renderCount.current}`);
+
+  });
+
+
+  mainContainerRef.name = 'mainContainer';
+
+  objectsContainerRef.name = 'objectsContainer';
+
+  useEffect(() => {
+    if (appRef.current && pixiContainerRef.current) {
+      pixiContainerRef.current.appendChild(appRef.current.view);
+    }
+  }, [appRef]); // This effect depends on appRef
+
+  return <div ref={pixiContainerRef} id="pixi-container" />;
+
+})
 
 export default PixiCanvasComponent;
