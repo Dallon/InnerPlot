@@ -36,12 +36,9 @@ export class IsoGrid {
         
         const tileSprite = new PIXI.Sprite(texture);
       
-        // tileSprite.anchor.set(0.5, 1);  // Anchor at bottom center-- does nothing.
-        tileSprite.pivot.set(tileSprite.width / 2, tileSprite.height / 2);
 
         tileSprite.width = tileWidth;
         tileSprite.height = tileHeight;
-        // console.log(`Sprite dimensions: ${tileSprite.width}x${tileSprite.height}`);
 
         tileSprite.rotation = Math.PI / 4;
 
@@ -50,27 +47,6 @@ export class IsoGrid {
 
         return tileSprite;
     }
-
-
-    // Convert screen coordinates to isometric grid coordinates
-    static screenToGridCoords(screenX, screenY, viewportOffsetX, viewportOffsetY, scaleFactor, tileWidth, tileHeight) {
-        // Convert screen to world coordinates
-        let worldX = screenX + viewportOffsetX;
-        let worldY = screenY + viewportOffsetY;
-
-        worldX = worldX / scaleFactor;
-        worldY = worldY / scaleFactor;
-
-        // Convert world to Cartesian tile coordinates
-        const cartX = Math.floor(worldX / tileWidth);
-        const cartY = Math.floor(worldY / tileHeight);
-
-        // Convert Cartesian to isometric tile coordinates
-        const isoCol = cartX - cartY;
-        const isoRow = (cartX + cartY) / 2;
-        return { row: isoRow, col: isoCol };
-    }
-
 
 
     // Method to render the isometric tiles on a PIXI container
