@@ -6,12 +6,8 @@ import {Assets} from 'pixi.js';
 export const loadPNGAsTexture = async (pngUrl) => {
     try {
 
-        //Load URL
-        //Add to assets where first param is the asset name, second the link address
-        Assets.add({alias:pngUrl, src: pngUrl});
-        console.log(Assets);
-
-
+        //Add URL to assets where first param is the asset name, second the link address
+            Assets.add({alias:pngUrl, src: pngUrl});
         // Retrieve the loaded texture using PIXI.Assets
         const texture = await Assets.load(pngUrl);
 
